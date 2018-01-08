@@ -8,6 +8,8 @@
  *
  */
 
+  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
 'use strict';
 
 // Imports dependencies and set up http server
