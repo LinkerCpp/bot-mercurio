@@ -65,16 +65,60 @@ app.post('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
   let response;
   
-  // Check if the message contains text
-  if (received_message.text) {
-    
-    // Create the payLoad for a basic text message
+  // Checks if the message contains text
+  if (received_message.text) {    
+    // Create the payload for a basic text message, which
+    // will be added to the body of our request to the Send API
     response = {
-      "text": 'Você enviou a mensage: "${received_message.text}". Agora me envie uma imagem!'
+      "text": `Você me enviou a mensagem: "${received_message.text}". Agora me envie uma imagem!`
     }
-  }
+  } else if (received_message.attachments) {
+    // Get the URL of the message attachment
+    let attachment_url = received_message.attachments[0].payload.url;
+    response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Essa é a imagem correta?",
+            "subtitle": "Aperte o botão para responder",
+            "image_url": attachment_url,
+            "buttons": [
+              {
+                "type": "postback",
+                "title": "Sim",
+                "payload": "sim",
+              },
+              {
+                "type": "postback",
+                "title": "Não",
+                "payload": "nao",
+              }
+            ],
+          }]
+        }
+      }
+    }
+  } 
   
-  //Sends the response message
+  // Send the response message
+  callSendAPI(sender_psid, response);    
+}
+
+function handlePostback(sender_psid, received_postback) {
+  let response;
+  
+  // Get the payload for the postback
+  let payload = received_postback.payload;
+
+  // Set the response based on the postback payload
+  if (payload === 'sim') {
+    response = { "text": "Ótimo, a funcionalidade está perfeita!" }
+  } else if (payload === 'nao') {
+    response = { "text": "Ops, tente enviar uma imagem diferente" }
+  }
+  // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
 }
 
