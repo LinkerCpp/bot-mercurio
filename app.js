@@ -1,10 +1,10 @@
 /*
  * Esse projeto foi baseado no projeto de início rápido do facebook messenger.
  *
- * Remix this as the starting point for following the Messenger Platform
- * quick start tutorial.
+ * A plataforma glitch foi utilizada para cópia rápida dos arquivos originais
+ * presentes no tutorial, mas podem haver alterações no código final. 
  *
- * https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
+ * O tutorial pode ser achado no site - https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
  *
  */
 
@@ -12,26 +12,26 @@
 
 'use strict';
 
-// Imports dependencies and set up http server
+// Importar dependências e carregar o servidor http
 const 
   request = require('request'),
   express = require('express'),
   body_parser = require('body-parser'),
-  app = express().use(body_parser.json()); // creates express http server
+  app = express().use(body_parser.json()); // cria um servidor http express
 
-// Sets server port and logs message on success
+// Configura as portas do servidor e exibe mensagem caso bem sucedido
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
-// Accepts POST requests at /webhook endpoint
+// Aceita requisilções do tipo POST no endpoint do webhook
 app.post('/webhook', (req, res) => {  
 
-  // Parse the request body from the POST
+  // Trata o corpo da mensagem do POST
   let body = req.body;
 
-  // Check the webhook event is from a Page subscription
+  // Checa se o evento é de uma assinatura na página
   if (body.object === 'page') {
 
-    // Iterate over each entry - there may be multiple if batched
+    // Iterações e respostas de cada post vão aqui -PARTE PRINCIPAL DO CÓDIGO-
     body.entry.forEach(function(entry) {
 
       // Get the webhook event. entry.messaging is an array, but 
@@ -146,21 +146,23 @@ function callSendAPI(sender_psid, response) {
   }); 
 }
 
-// Accepts GET requests at the /webhook endpoint
+// Aceita requisições GET no endpoint do webhook
 app.get('/webhook', (req, res) => {
   
-  /** UPDATE YOUR VERIFY TOKEN **/
+  /** Token de Verificação do bot - é utilizado na plataforma
+  de aplicativos do facebook **/
   const VERIFY_TOKEN = "arcoiris123";
   
-  // Parse params from the webhook verification request
+  // Tratando os parâmetros da requisição
+  // mode
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
   let challenge = req.query['hub.challenge'];
     
-  // Check if a token and mode were sent
+  // Checa se o mode e o token foram enviados
   if (mode && token) {
   
-    // Check the mode and token sent are correct
+    // Checa se o mode e o token estão corretos
     if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       
       // Respond with 200 OK and challenge token from the request
