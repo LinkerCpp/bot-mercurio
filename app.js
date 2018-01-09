@@ -46,7 +46,9 @@ app.post('/webhook', (req, res) => {
       
       // Checa se o evento é uma mensagem ou um postback
       // e passa o evento para a função apropriada
-      // Mensagem: Texto de 
+      // Mensagem: Texto enviado pelo remetente
+      // Postback: Processamento feito pelo bot, com a exibição de elementos 
+      // web interativos, como botões
       if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
@@ -54,11 +56,11 @@ app.post('/webhook', (req, res) => {
       }
     });
 
-    // Return a '200 OK' response to all events
+    // Retorna uma resposta 200 ok para todos os eventos
     res.status(200).send('EVENT_RECEIVED');
 
   } else {
-    // Return a '404 Not Found' if event is not from a page subscription
+    // Retorna '404 Não encontrado' se o evento não é de uma assinatura da página
     res.sendStatus(404);
   }
 
@@ -67,16 +69,18 @@ app.post('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
   let response;
   
-  // Checks if the message contains text
+  // Checa se a mensagem contém texto
   if (received_message.text) {    
-    // Create the payload for a basic text message, which
-    // will be added to the body of our request to the Send API
+    // Cria o payload para uma mensagem de texto básico
+    // que será adicionada ao corpo da nossa requisição para a API de envio
+    // Payload: conteúdo de uma transmissão, carga
     response = {
       "text": `Você me enviou a mensagem: "${received_message.text}". Agora me envie uma imagem!`
     }
-  } else if (received_message.attachments) {
-    // Get the URL of the message attachment
+  } else if (received_message.attachments) { // Aqui, a mensagem é um anexo, como uma imagem
+    // Recebe a URL do anexo
     let attachment_url = received_message.attachments[0].payload.url;
+    // Constrói a resposta com template básico, o anexo e dois botões. 
     response = {
       "attachment": {
         "type": "template",
@@ -104,7 +108,7 @@ function handleMessage(sender_psid, received_message) {
     }
   } 
   
-  // Send the response message
+  // Envia a mensagem de resposta
   callSendAPI(sender_psid, response);    
 }
 
