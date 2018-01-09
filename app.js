@@ -1,5 +1,5 @@
 /*
- * Starter Project for Messenger Platform Quick Start Tutorial
+ * Esse projeto foi baseado no projeto de início rápido do facebook messenger.
  *
  * Remix this as the starting point for following the Messenger Platform
  * quick start tutorial.
