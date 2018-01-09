@@ -1,19 +1,16 @@
-# Messenger Platform Quick Start
+# Bot de Mensagens Automáticas do Facebook
 
-Welcome to your first step toward building awesome Messenger apps!
+Esse projeto contém o código utilizado para criar um webhook simples, conforme o tutorial de Início Rápido do Facebook
 
-This project contains the code for a simple webhook you can use to get started using the Messenger Platform.
+A base para esse código pode ser encontrada no endereço (https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start).
 
-The code here mirrors what is in our [webhook set up guide](https://developers.facebook.com/docs/messenger-platform/getting-started/webhook-setup), and may be used as the starting point for doing the [Messenger Platform quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start).
+## Sobre a Mercurio
 
-## Additional Resources
+A Mercurio é uma empresa brasileira de marmeting digital. Nós gerenciamos mídias sociais, planejamos cursos de ação e projetamos as melhores ferramentas para a sua empresa. 
+Quer conhecer mais a Mercurio?
 
-Interested in learning more about the Messenger Platform? Check out these resources:
+- [**Site da Mercurio**](https://mercuriomkt.com): Conheça nossos principais serviços. 
 
-- [**Webhook set up guide**](https://developers.facebook.com/docs/messenger-platform/getting-started/webhook-setup): The walkthrough for the code in this project.
+- [**Fan page Facebook**](https://facebook.com/mercuriomkt): Siga a Mercurio no Facebook
 
-- [**App set up guide**](https://developers.facebook.com/docs/messenger-platform/getting-started/app-setup): Instructions for setting up a Facebook app for use with the Messenger Platform, and hooking it up to this webhook.
-
-- [**Quick start tutorial**](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start): Build your first Messenger app by remixing this project and following our quick start tutorial.
-
-- [**Docs Docs Docs!**](https://developers.facebook.com/docs/messenger-platform/)
+- [**Documentos desse projeto**](https://developers.facebook.com/docs/messenger-platform/): A documentação base para a criação desse projeto pode ser encontrada aqui. 
