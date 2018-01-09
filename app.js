@@ -5,7 +5,8 @@
  * presentes no tutorial, mas podem haver alterações no código final. 
  *
  * O tutorial pode ser achado no site - https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
- *
+ * Para maior consistência com a documentação original, os nomes das variáveis e das funções foram mantidas no original em inglês. 
+ * Autor: Willian Amaral
  */
 
   const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -109,21 +110,21 @@ function handleMessage(sender_psid, received_message) {
 function handlePostback(sender_psid, received_postback) {
   let response;
   
-  // Get the payload for the postback
+  // Recebe o payload do postback. 
   let payload = received_postback.payload;
 
-  // Set the response based on the postback payload
+  // Define a resposta dependendo do payload do postback
   if (payload === 'sim') {
     response = { "text": "Ótimo, a funcionalidade está perfeita!" }
   } else if (payload === 'nao') {
     response = { "text": "Ops, tente enviar uma imagem diferente" }
   }
-  // Send the message to acknowledge the postback
+  // Envia a mensagem para reconhecer o postback
   callSendAPI(sender_psid, response);
 }
 
 function callSendAPI(sender_psid, response) {
-  // Construct the message body
+  // Constrói o corpo da mensagem (em JSON)
   let request_body = {
     "recipient": {
       "id": sender_psid
@@ -131,7 +132,7 @@ function callSendAPI(sender_psid, response) {
     "message": response
   }
 
-  // Send the HTTP request to the Messenger Platform
+  // Envia a requisição HTTP para a plataforma do messenger
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN },
@@ -154,7 +155,9 @@ app.get('/webhook', (req, res) => {
   const VERIFY_TOKEN = "arcoiris123";
   
   // Tratando os parâmetros da requisição
-  // mode
+  // hub.mode - deve ser sempre "subscribe" 
+  // hub.verify_token - verifica se os tokens são consistentes
+  // hub.challenge - uma cadeia aleatória para transmissão
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
   let challenge = req.query['hub.challenge'];
@@ -165,12 +168,12 @@ app.get('/webhook', (req, res) => {
     // Checa se o mode e o token estão corretos
     if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       
-      // Respond with 200 OK and challenge token from the request
+      // Responde com o 200 ok e verifica o funcionamento do webhook com o challenge
       console.log('WEBHOOK_VERIFIED');
       res.status(200).send(challenge);
     
     } else {
-      // Responds with '403 Forbidden' if verify tokens do not match
+      // Responde com o erro 403 PROIBIDO se os valores do token forem diferentes. 
       res.sendStatus(403);      
     }
   }
