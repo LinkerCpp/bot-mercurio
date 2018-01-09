@@ -35,17 +35,18 @@ app.post('/webhook', (req, res) => {
     // Iterações e respostas de cada post vão aqui -PARTE PRINCIPAL DO CÓDIGO-
     body.entry.forEach(function(entry) {
 
-      // Get the webhook event. entry.messaging is an array, but 
-      // will only ever contain one event, so we get index 0
+      // Recebe o evento do webhook. entry.messaging é uma matriz, mas
+      // só irá conter sempre um único evento, por isso seu índice está setado em 0
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
       
-      //Get the sender PSID
+      // Recebe o PSID do remetente
       let sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
       
-      // Check if the event is a message or postback and
-      // pass the event to the appropriate handler function
+      // Checa se o evento é uma mensagem ou um postback
+      // e passa o evento para a função apropriada
+      // Mensagem: Texto de 
       if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
