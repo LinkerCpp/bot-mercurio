@@ -1,7 +1,7 @@
 {
   "name": "bot-mercurio",
   "version": "1.0.0",
-  "description": "Um bot simples para o messenger do facebook.",
+  "description": "Um bot simples para o messenger do facebook!",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
