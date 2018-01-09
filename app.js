@@ -7,6 +7,8 @@
  * O tutorial pode ser achado no site - https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
  * Para maior consistência com a documentação original, os nomes das variáveis e das funções foram mantidas no original em inglês. 
  * Autor: Willian Amaral
+ * Empresa: Mercurio Comunicação e Marketing
+ * www.mercuriomkt.com
  */
 
   const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
