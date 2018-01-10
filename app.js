@@ -11,7 +11,6 @@
  * www.mercuriomkt.com
  */
 
-  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 'use strict';
 
@@ -20,10 +19,18 @@ const
   request = require('request'),
   express = require('express'),
   body_parser = require('body-parser'),
-  app = express().use(body_parser.json()); // cria um servidor http express
+  https = require('https');
 
-// Configura as portas do servidor e exibe mensagem caso bem sucedido
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+//Variáveis
+let pageToken = "";
+const
+  verify_token = "arcoiris123",
+  privkey = "",
+  cert = "",
+  chain = "";
+
+const fs = require('fs');
+const app = express().use(body_parser.json()); // cria um servidor http express
 
 // Aceita requisilções do tipo POST no endpoint do webhook
 app.post('/webhook', (req, res) => {  
@@ -157,9 +164,6 @@ function callSendAPI(sender_psid, response) {
 // Aceita requisições GET no endpoint do webhook
 app.get('/webhook', (req, res) => {
   
-  /** Token de Verificação do bot - é utilizado na plataforma
-  de aplicativos do facebook **/
-  const VERIFY_TOKEN = "arcoiris123";
   
   // Tratando os parâmetros da requisição
   // hub.mode - deve ser sempre "subscribe" 
@@ -173,7 +177,7 @@ app.get('/webhook', (req, res) => {
   if (mode && token) {
   
     // Checa se o mode e o token estão corretos
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    if (mode === 'subscribe' && token === verify_token) {
       
       // Responde com o 200 ok e verifica o funcionamento do webhook com o challenge
       console.log('WEBHOOK_VERIFIED');
@@ -185,3 +189,12 @@ app.get('/webhook', (req, res) => {
     }
   }
 });
+
+https.createServer({
+  key: fs.readFileSync(privkey),
+  cert: fs.readFileSync(cert),
+  ca: fs.readFileSync(chain)
+}, app).listen(55555, function () {
+  console.log('App está funcionando na porta 55555');
+});
+})
