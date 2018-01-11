@@ -1,2 +1,5 @@
 # Variáveis de Ambiente
 *.env
+
+# Diretórios de Instalação
+/node_modules
