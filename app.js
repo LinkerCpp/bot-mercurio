@@ -1,9 +1,6 @@
 /*
  * Esse projeto foi baseado no projeto de início rápido do facebook messenger.
- *
- * A plataforma glitch foi utilizada para cópia rápida dos arquivos originais
- * presentes no tutorial, mas podem haver alterações no código final. 
- *
+ * As configurações necessárias para o funcionamento do bot podem ser encontradas no README.MD
  * O tutorial pode ser achado no site - https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
  * Para maior consistência com a documentação original, os nomes das variáveis e das funções foram mantidas no original em inglês. 
  * Autor: Willian Amaral
@@ -11,8 +8,10 @@
  * www.mercuriomkt.com
  */
 
+//Requisita os valores armazenados no arquivo .env
 require('dotenv').config()
 'use strict';
+
 // Variáveis de Ambiente 
 const 
 	pageToken = process.env.pageToken,
@@ -20,8 +19,6 @@ const
 	privkey = process.env.privkey,
 	cert = process.env.cert,
 	chain = process.env.chain;
-
-
 
 // Importar dependências e carregar o servidor http
 const 
@@ -41,7 +38,7 @@ app.post('/webhook', (req, res) => {
   // Checa se o evento é de uma assinatura na página
   if (body.object === 'page') {
 
-    // Iterações e respostas de cada post vão aqui -PARTE PRINCIPAL DO CÓDIGO-
+    // Iterações e respostas de cada post vão aqui - REALIZAR AS MODIFICAÇÕES AQUI
     body.entry.forEach(function(entry) {
 
       // Recebe o evento do webhook. entry.messaging é uma matriz, mas
@@ -112,7 +109,7 @@ function handleMessage(sender_psid, received_message) {
     // que será adicionada ao corpo da nossa requisição para a API de envio
     // Payload: conteúdo de uma transmissão, carga
     response = {
-      "text": `Você me enviou a mensagem: "${received_message.text}". Agora me envie uma imagem!`
+      "text": `Você me enviou a mensagem: "${received_message.text}". Experimente me enviar uma imagem!`
     }
   } else if (received_message.attachments) { // Aqui, a mensagem é um anexo, como uma imagem
     // Recebe a URL do anexo
@@ -187,6 +184,7 @@ function callSendAPI(sender_psid, response) {
 	     });
 }
 
+//Constrói a url e o servidor, escolhendo a porta para a criação
  https.createServer({
 	key: fs.readFileSync(privkey),
 	cert: fs.readFileSync(cert),
