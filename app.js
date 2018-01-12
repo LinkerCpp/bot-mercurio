@@ -11,19 +11,26 @@
  * www.mercuriomkt.com
  */
 
-
+require('dotenv').config()
 'use strict';
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+// Variáveis de Ambiente 
+const 
+	pageToken = process.env.pageToken,
+	verifyToken = process.env.verifyToken,
+	privkey = process.env.privkey,
+	cert = process.env.cert,
+	chain = process.env.chain;
+
+
 
 // Importar dependências e carregar o servidor http
 const 
-  request = require('request'),
+  request = require('superagent'),
   express = require('express'),
   body_parser = require('body-parser'),
+  https = require('https'),
+  fs = require('fs'),
   app = express().use(body_parser.json()); // cria um servidor http express
-
-// Configura as portas do servidor e exibe mensagem caso bem sucedido
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
 // Aceita requisilções do tipo POST no endpoint do webhook
 app.post('/webhook', (req, res) => {  
@@ -71,10 +78,6 @@ app.post('/webhook', (req, res) => {
 // Aceita requisições GET no endpoint do webhook
 app.get('/webhook', (req, res) => {
   
-  /** Token de Verificação do bot - é utilizado na plataforma
-  de aplicativos do facebook **/
-  const VERIFY_TOKEN = "arcoiris123";
-  
   // Tratando os parâmetros da requisição
   // hub.mode - deve ser sempre "subscribe" 
   // hub.verify_token - verifica se os tokens são consistentes
@@ -87,7 +90,7 @@ app.get('/webhook', (req, res) => {
   if (mode && token) {
   
     // Checa se o mode e o token estão corretos
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    if (mode === 'subscribe' && token === verifyToken) {
       
       // Responde com o 200 ok e verifica o funcionamento do webhook com o challenge
       console.log('WEBHOOK_VERIFIED');
@@ -171,17 +174,24 @@ function callSendAPI(sender_psid, response) {
     "message": response
   }
 
-  // Envia a requisição HTTP para a plataforma do messenger
-  request({
-    "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
-    if (!err) {
-      console.log('Mensagem enviada!')
-    } else {
-      console.error("Incapaz de enviar mensagem" + err);
-    }
-  }); 
+  request
+	.post('https://graph.facebook.com/v2.6/me/messages')
+	.query({access_token: pageToken})
+	.send(request_body)
+	.end((err,res, body) => {
+		if(!err) {
+			console.log('Mensagem enviada!');
+		} else {
+			console.error("Incapaz de enviar mensaegem" + err);
+		}
+	     });
 }
+
+ https.createServer({
+	key: fs.readFileSync(privkey),
+	cert: fs.readFileSync(cert),
+	ca: fs.readFileSync(chain)
+}, app).listen(55555, function () {
+	console.log('App está pronto na porta 55555');
+});
+
