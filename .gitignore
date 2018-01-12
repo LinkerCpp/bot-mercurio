@@ -3,3 +3,6 @@
 
 # Diretórios de Instalação
 /node_modules
+
+#Hooks de execuÃ§Ã£o
+git-hook.php
