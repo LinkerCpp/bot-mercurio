@@ -109,7 +109,7 @@ function handleMessage(sender_psid, received_message) {
     // que será adicionada ao corpo da nossa requisição para a API de envio
     // Payload: conteúdo de uma transmissão, carga
     response = {
-      "text": `Você me enviou a mensagem: "${received_message.text}". Experimente me enviar uma imagem!`
+      "text": `Você me enviou a mensagem: "${received_message.text}". Tente me enviar uma imagem!`
     }
   } else if (received_message.attachments) { // Aqui, a mensagem é um anexo, como uma imagem
     // Recebe a URL do anexo
