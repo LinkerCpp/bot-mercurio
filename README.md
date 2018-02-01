@@ -6,7 +6,7 @@ A base para esse código pode ser encontrada no endereço (https://developers.fa
 
 ## Sobre a Mercurio
 
-A Mercurio é uma empresa brasileira de marmeting digital. Nós gerenciamos mídias sociais, planejamos cursos de ação e projetamos as melhores ferramentas para a sua empresa. 
+A Mercurio é uma empresa brasileira de marketing digital. Nós gerenciamos mídias sociais, planejamos cursos de ação e projetamos as melhores ferramentas para a sua empresa. 
 Quer conhecer mais a Mercurio? Explore os links abaixo ou entre em contato com a gente. 
 
 - [**Site da Mercurio**](https://mercuriomkt.com): Conheça nossos principais serviços. 
